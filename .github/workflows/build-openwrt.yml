@@ -141,19 +141,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     
-    - name: 编译信息
-      run: |
-        cd openwrt
-        if [[ ${{matrix.target}} != "openwrt" ]]; then
-          if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-     #  #     source common/upgrade.sh && Diy_Part2
-            echo "log1=$(awk 'NR==4' package/base-files/files/etc/openwrt_info)" >> $GITHUB_ENV
-            echo "log2=$(awk 'NR==3' package/base-files/files/etc/openwrt_info)" >> $GITHUB_ENV
-            echo "log3=$(awk 'NR==1' package/base-files/files/etc/openwrt_info)" >> $GITHUB_ENV
-          else
-     #       source common/common.sh && Diy_xinxi
-          fi
-        fi
+   
     
     - name: 开始编译固件
       id: compile
@@ -183,32 +171,12 @@ jobs:
         name: OpenWrt_bin_${{ env.NAME2 }}${{ env.NAME1 }}_${{ env.date }}
         path: openwrt/bin
 
-    - name: 编译N1机型时,打包（N1、微加云、贝壳云、我家云、S9xxx）固件
-      run: |
-        cd openwrt
-        if [[ ${{matrix.target}} =~ (Lede_phicomm_n1|Project_phicomm_n1) ]]; then
-    #      source common/common.sh && Diy_n1
-         cd out
-         for x in ${devices[*]}; do
-           cd $x
-           filename=$(ls | awk -F '.img' '{print $1}')
-           gzip *.img
-           cd ../
-           echo "firmware_$x=$filename" >> $GITHUB_ENV
-         done
-           cd ../../
-           mv -f reform/out/*/*.img.gz openwrt/bin/targets/armvirt/*
-        fi
+   
     
     - name: 整理固件文件夹
       id: organizer
       run: |
         cd openwrt
-        if [[ ${{matrix.target}} != "openwrt" ]]; then
-          if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-     #       source common/upgrade.sh && Diy_Part3
-          fi  
-        fi
         mkdir bin/config
         find bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} bin/config
         if [ -n "$(ls -A "openwrt/bin/targets/x86" 2>/dev/null)" ]; then
