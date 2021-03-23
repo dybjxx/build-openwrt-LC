@@ -123,7 +123,7 @@ jobs:
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
         cd openwrt
      #   source common/common.sh && Diy_all
-       # if [ ${{matrix.target}} != "openwrt" ]; then
+     #  # if [ ${{matrix.target}} != "openwrt" ]; then
      #     if [ "${REPO_URL}" == "https://github.com/coolsnowwolf/lede" ]; then
      #       source common/common.sh && Diy_lede
      #     elif [ "${REPO_URL}" == "https://github.com/Lienol/openwrt" ]; then
@@ -132,10 +132,10 @@ jobs:
      #       source common/common.sh && Diy_immortalwrt
      #     fi
      #   fi
-        if [ -f "build/${{matrix.target}}/$DIY_P1_SH" ]; then
-          chmod +x build/${{matrix.target}}/$DIY_P1_SH
-          /bin/bash "build/${{matrix.target}}/$DIY_P1_SH"
-        fi
+     #   if [ -f "build/${{matrix.target}}/$DIY_P1_SH" ]; then
+     #     chmod +x build/${{matrix.target}}/$DIY_P1_SH
+     #     /bin/bash "build/${{matrix.target}}/$DIY_P1_SH"
+     #   fi
         ./scripts/feeds clean && ./scripts/feeds update -a
         ./scripts/feeds install -a && ./scripts/feeds install -a
       #  source common/common.sh && Diy_all2
