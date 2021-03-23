@@ -109,7 +109,7 @@ jobs:
         df -hT $PWD
         git clone -b $REPO_BRANCH --single-branch $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-       # git clone -b main --single-branch https://github.com/281677160/Custom openwrt/common
+      ## git clone -b main --single-branch https://github.com/281677160/Custom openwrt/common
       #  chmod +x openwrt/common/* ./
     
     - name: 公告（每次启动都读取最新内容，展开可以查看）
@@ -198,7 +198,7 @@ jobs:
         cd openwrt
         if [[ ${{matrix.target}} != "openwrt" ]]; then
           if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-       #     source common/upgrade.sh && Diy_Part2
+     #  #     source common/upgrade.sh && Diy_Part2
             echo "log1=$(awk 'NR==4' package/base-files/files/etc/openwrt_info)" >> $GITHUB_ENV
             echo "log2=$(awk 'NR==3' package/base-files/files/etc/openwrt_info)" >> $GITHUB_ENV
             echo "log3=$(awk 'NR==1' package/base-files/files/etc/openwrt_info)" >> $GITHUB_ENV
