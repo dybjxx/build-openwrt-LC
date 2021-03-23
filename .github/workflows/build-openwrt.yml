@@ -121,7 +121,8 @@ jobs:
     - name: 加载源,patch补丁和自定义设置
       run: |
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
-        cd openwrt
+        cd openwrt && ./scripts/feeds install -a
+        ./scripts/feeds install -a
      #   source common/common.sh && Diy_all
      #  # if [ ${{matrix.target}} != "openwrt" ]; then
      #     if [ "${REPO_URL}" == "https://github.com/coolsnowwolf/lede" ]; then
@@ -136,8 +137,8 @@ jobs:
      #     chmod +x build/${{matrix.target}}/$DIY_P1_SH
      #     /bin/bash "build/${{matrix.target}}/$DIY_P1_SH"
      #   fi
-        ./scripts/feeds clean && ./scripts/feeds update -a
-        ./scripts/feeds install -a && ./scripts/feeds install -a
+     #  ./scripts/feeds update -a
+    #   ./scripts/feeds install -a && ./scripts/feeds install -a
       #  source common/common.sh && Diy_all2
       #  if [ "${REPO_URL}" == "https://github.com/coolsnowwolf/lede" ]; then
       #    source common/common.sh && Diy_lede2
